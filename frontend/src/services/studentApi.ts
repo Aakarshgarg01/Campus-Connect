@@ -1,0 +1,2 @@
+import { currentStudent,predictionHistory,records,target } from "@/data/mock-data"; import { mockDelay } from "./api";
+export const studentApi={ getProfile:()=>mockDelay(currentStudent), getPerformance:()=>mockDelay(records), getPredictionHistory:()=>mockDelay(predictionHistory), getTarget:()=>mockDelay({targetPerformance:target}), updateTarget:(targetPerformance:number)=>mockDelay({targetPerformance}) };

@@ -1,0 +1,2 @@
+import { benchmark,students } from "@/data/mock-data"; import { mockDelay } from "./api";
+export const facultyApi={ getStudents:()=>mockDelay(students), getBelowBenchmark:()=>mockDelay(students.filter(s=>s.prediction<benchmark)), getStudent:(id:string)=>mockDelay(students.find(s=>s.id===id)??null), updateBenchmark:(benchmarkPerformance:number)=>mockDelay({benchmarkPerformance}), updateMonitoring:(studentId:string,status:string,notes:string)=>mockDelay({studentId,status,notes}) };
