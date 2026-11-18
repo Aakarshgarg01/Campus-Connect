@@ -1,2 +1,0 @@
-import { uploadPreview } from "@/data/mock-data"; import { mockDelay } from "./api";
-export const uploadApi={ validate: async(file:File,stage:"internal1"|"internal2")=>mockDelay({valid:/\.(csv|xlsx)$/i.test(file.name),stage,rows:uploadPreview,errors:/\.(csv|xlsx)$/i.test(file.name)?[]:["Invalid file type. Upload a .csv or .xlsx file."]}), confirm: async(stage:string)=>mockDelay({ok:true,stage,message:stage==="internal2"?"Internal 2 data added. Existing Internal 1 records were preserved.":"Internal 1 data uploaded. Stage 1 predictions are now available."}) };

@@ -1,0 +1,11 @@
+# Keep the image small and free of secrets: only app code, migrations and models are copied.
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+.env.*
+tests/
+ml_training/
+.claude/
+*.md

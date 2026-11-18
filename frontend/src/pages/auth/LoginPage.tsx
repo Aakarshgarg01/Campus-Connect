@@ -1,16 +1,16 @@
 import { useEffect, useState, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
-import { ArrowRight, BookOpenCheck, CheckCircle2, Eye, EyeOff } from "lucide-react";
+import { ArrowRight, BookOpenCheck, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { DataState, Logo } from "@/components/campus/core";
 import { useAuth } from "@/context/auth-context";
 import { getApiErrorMessage } from "@/lib/api-error";
-import type { AuthRole } from "@/services/authApi";
+import { workspaceOf } from "@/services/authApi";
+import { Link } from "@tanstack/react-router";
 export function LoginPage() {
   const [identifier, setIdentifier] = useState("");
   const [password, setPassword] = useState("");
-  const [role, setRole] = useState<AuthRole>("student");
   const [show, setShow] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -19,7 +19,7 @@ export function LoginPage() {
   useEffect(() => {
     if (!isLoading && user)
       nav({
-        to: user.role === "student" ? "/student/dashboard" : "/faculty/dashboard",
+        to: workspaceOf(user) === "student" ? "/student/dashboard" : "/faculty/dashboard",
         replace: true,
       });
   }, [isLoading, user, nav]);
@@ -30,7 +30,10 @@ export function LoginPage() {
     try {
       const authenticatedUser = await login(identifier, password);
       nav({
-        to: authenticatedUser.role === "student" ? "/student/dashboard" : "/faculty/dashboard",
+        to:
+          workspaceOf(authenticatedUser) === "student"
+            ? "/student/dashboard"
+            : "/faculty/dashboard",
         replace: true,
       });
     } catch (loginError) {
@@ -82,9 +85,9 @@ export function LoginPage() {
           </div>
           <span className="eyebrow">Welcome back</span>
           <h2>Sign in to CampusConnect</h2>
-          <p>Use your institutional account to continue.</p>
+          <p>Sign in with your email, roll number or staff ID.</p>
           <label>
-            Institutional ID or email
+            Email, roll number or staff ID
             <Input
               type="text"
               autoComplete="username"
@@ -98,6 +101,7 @@ export function LoginPage() {
             <div className="password-field">
               <Input
                 type={show ? "text" : "password"}
+                autoComplete="current-password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -113,43 +117,19 @@ export function LoginPage() {
               </Button>
             </div>
           </label>
-          <div className="forgot">
-            <button type="button">Forgot password?</button>
-          </div>
           {error && (
             <p role="alert" className="text-sm text-destructive">
               {error}
             </p>
           )}
-          <fieldset>
-            <legend>Quick account</legend>
-            <div className="role-options">
-              {(["student", "faculty"] as Role[]).map((r) => (
-                <button
-                  type="button"
-                  key={r}
-                  className={role === r ? "selected" : ""}
-                  onClick={() => {
-                    setRole(r);
-                    setIdentifier(r === "student" ? "CS21041" : "FAC1024");
-                  }}
-                >
-                  <span>
-                    <b>{r === "student" ? "Student" : "Faculty"}</b>
-                    <small>
-                      {r === "student" ? "View personal performance" : "Monitor a semester cohort"}
-                    </small>
-                  </span>
-                  {role === r && <CheckCircle2 />}
-                </button>
-              ))}
-            </div>
-            <small>The server verifies your account and determines your workspace.</small>
-          </fieldset>
           <Button type="submit" size="lg" disabled={busy}>
             {busy ? "Signing in…" : "Sign in"}
             <ArrowRight />
           </Button>
+          <p className="auth-switch">
+            New student? <Link to="/register">Create an account</Link>
+          </p>
+          <p className="auth-switch">Faculty accounts are created by an administrator.</p>
         </form>
       </section>
     </div>

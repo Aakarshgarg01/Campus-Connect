@@ -1,4 +1,20 @@
-import { mockDelay } from "./api";
-export type Stage1Input={attendancePercentage:number;internal1Performance:number;assignmentPerformance:number};
-export type Stage2Input=Stage1Input&{internal2Performance:number};
-export const predictionApi={ stage1:(input:Stage1Input)=>mockDelay({stage:"stage1",input,status:"pending"}), stage2:(input:Stage2Input)=>mockDelay({stage:"stage2",input,status:"pending"}), whatIf:(input:Stage2Input)=>mockDelay({currentPrediction:72,simulatedPrediction: input.attendancePercentage>=90 ? 76 : 74}) };
+import { api } from "./api";
+import type { FeatureImportance, Prediction, PredictionInputs, Simulation, Stage } from "./types";
+
+export const predictionApi = {
+  /** Saved prediction. Omit `inputs` to use the student's stored records (students must). */
+  async predict(student_id: number, stage: Stage, inputs?: PredictionInputs) {
+    const body = inputs ? { student_id, stage, inputs } : { student_id, stage };
+    return (await api.post<Prediction>("/api/predictions/predict", body)).data;
+  },
+  /** What-if: same model, nothing is saved. */
+  async simulate(stage: Stage, inputs: PredictionInputs) {
+    return (await api.post<Simulation>("/api/predictions/simulate", { stage, inputs })).data;
+  },
+  async get(id: number) {
+    return (await api.get<Prediction>(`/api/predictions/${id}`)).data;
+  },
+  async featureImportance() {
+    return (await api.get<FeatureImportance>("/api/feature-importance")).data;
+  },
+};

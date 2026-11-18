@@ -1,7 +1,6 @@
 import { Link, useLocation, useNavigate } from "@tanstack/react-router";
 import { useState, type ReactNode } from "react";
 import {
-  Bell,
   BookOpen,
   ChartNoAxesCombined,
   ChevronRight,
@@ -24,7 +23,7 @@ import { Logo } from "./core";
 import { useAuth } from "@/context/auth-context";
 import { getApiErrorMessage } from "@/lib/api-error";
 import { Button } from "@/components/ui/button";
-import type { Role } from "@/data/mock-data";
+import type { Workspace } from "@/services/types";
 const studentNav = [
   ["/student/dashboard", "Overview", Gauge],
   ["/student/performance", "Performance", BookOpen],
@@ -43,7 +42,7 @@ const facultyNav = [
   ["/faculty/monitoring", "Monitoring", MonitorCheck],
   ["/faculty/profile", "Profile", UserRound],
 ] as const;
-export function AppShell({ role, children }: { role: Role; children: ReactNode }) {
+export function AppShell({ role, children }: { role: Workspace; children: ReactNode }) {
   const [open, setOpen] = useState(false);
   const [loggingOut, setLoggingOut] = useState(false);
   const loc = useLocation();
@@ -109,7 +108,13 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
           </div>
           <div>
             <strong>{user?.name}</strong>
-            <span>{role === "student" ? "Semester 7" : "Faculty"}</span>
+            <span>
+              {user?.role === "student"
+                ? (user.roll_number ?? "Student")
+                : user?.role === "admin"
+                  ? "Administrator"
+                  : "Faculty"}
+            </span>
           </div>
           <Button
             variant="ghost"
@@ -134,9 +139,6 @@ export function AppShell({ role, children }: { role: Role; children: ReactNode }
             <strong>{current?.[1] ?? "Workspace"}</strong>
           </div>
           <div className="topbar-right">
-            <Button variant="ghost" size="icon" aria-label="Notifications">
-              <Bell />
-            </Button>
             <div className="top-avatar">{user?.name?.charAt(0)}</div>
           </div>
         </header>

@@ -1,0 +1,328 @@
+{
+  "model_version": "stage2-linear_regression-20261118-dda06f7e",
+  "stage": "stage2",
+  "algorithm": "Linear Regression",
+  "algorithm_key": "linear_regression",
+  "hyperparameters": {},
+  "shap_explainer": "linear",
+  "features": [
+    {
+      "name": "attendance_pct",
+      "label": "Attendance",
+      "unit": "percent",
+      "allowed_range": [
+        0,
+        100
+      ],
+      "training_range": [
+        52.0,
+        100.0
+      ],
+      "training_mean": 84.8731
+    },
+    {
+      "name": "internal1_pct",
+      "label": "Internal Test 1",
+      "unit": "percent",
+      "allowed_range": [
+        0,
+        100
+      ],
+      "training_range": [
+        45.0,
+        100.0
+      ],
+      "training_mean": 80.3312
+    },
+    {
+      "name": "internal2_pct",
+      "label": "Internal Test 2",
+      "unit": "percent",
+      "allowed_range": [
+        0,
+        100
+      ],
+      "training_range": [
+        40.0,
+        100.0
+      ],
+      "training_mean": 80.9766
+    },
+    {
+      "name": "assignment_pct",
+      "label": "Assignment",
+      "unit": "percent",
+      "allowed_range": [
+        0,
+        100
+      ],
+      "training_range": [
+        40.0,
+        100.0
+      ],
+      "training_mean": 75.0187
+    }
+  ],
+  "target": {
+    "name": "final_exam_pct",
+    "label": "Final exam marks (%)",
+    "range": [
+      0,
+      100
+    ],
+    "note": "Raw predictions can fall slightly outside 0-100; the API clips them."
+  },
+  "metrics": {
+    "cv": {
+      "mae": {
+        "mean": 3.8799,
+        "std": 0.1661
+      },
+      "rmse": {
+        "mean": 4.8929,
+        "std": 0.185
+      },
+      "r2": {
+        "mean": 0.8119,
+        "std": 0.0316
+      }
+    },
+    "test": {
+      "mae": 3.8365,
+      "rmse": 4.8111,
+      "r2": 0.8149
+    },
+    "train": {
+      "mae": 3.8683,
+      "rmse": 4.8852,
+      "r2": 0.8156
+    }
+  },
+  "test_diagnostics": {
+    "residual_std": 4.8169,
+    "abs_error_p90": 7.7655,
+    "predictions_outside_0_100": 0,
+    "mae_by_actual_band": {
+      "<50": {
+        "n": 34,
+        "mae": 4.3899
+      },
+      "50-70": {
+        "n": 224,
+        "mae": 3.4471
+      },
+      ">=70": {
+        "n": 142,
+        "mae": 4.3183
+      }
+    }
+  },
+  "model_comparison": [
+    {
+      "key": "baseline_mean",
+      "name": "Baseline (predict training mean)",
+      "cv": {
+        "mae": {
+          "mean": 9.1256,
+          "std": 0.4558
+        },
+        "rmse": {
+          "mean": 11.371,
+          "std": 0.579
+        },
+        "r2": {
+          "mean": -0.0037,
+          "std": 0.0045
+        }
+      },
+      "test": {
+        "mae": 9.039,
+        "rmse": 11.19,
+        "r2": -0.0011
+      },
+      "best_params": {}
+    },
+    {
+      "key": "linear_regression",
+      "name": "Linear Regression",
+      "cv": {
+        "mae": {
+          "mean": 3.8799,
+          "std": 0.1661
+        },
+        "rmse": {
+          "mean": 4.8929,
+          "std": 0.185
+        },
+        "r2": {
+          "mean": 0.8119,
+          "std": 0.0316
+        }
+      },
+      "test": {
+        "mae": 3.8365,
+        "rmse": 4.8111,
+        "r2": 0.8149
+      },
+      "best_params": {}
+    },
+    {
+      "key": "decision_tree",
+      "name": "Decision Tree",
+      "cv": {
+        "mae": {
+          "mean": 4.5416,
+          "std": 0.1318
+        },
+        "rmse": {
+          "mean": 5.7456,
+          "std": 0.169
+        },
+        "r2": {
+          "mean": 0.7409,
+          "std": 0.0404
+        }
+      },
+      "test": {
+        "mae": 4.3333,
+        "rmse": 5.503,
+        "r2": 0.7579
+      },
+      "best_params": {
+        "max_depth": 8,
+        "min_samples_leaf": 10
+      }
+    },
+    {
+      "key": "gradient_boosting",
+      "name": "Gradient Boosting",
+      "cv": {
+        "mae": {
+          "mean": 4.0249,
+          "std": 0.1671
+        },
+        "rmse": {
+          "mean": 5.0854,
+          "std": 0.1954
+        },
+        "r2": {
+          "mean": 0.7967,
+          "std": 0.035
+        }
+      },
+      "test": {
+        "mae": 3.9735,
+        "rmse": 4.947,
+        "r2": 0.8043
+      },
+      "best_params": {
+        "learning_rate": 0.03,
+        "max_depth": 2,
+        "n_estimators": 300
+      }
+    },
+    {
+      "key": "random_forest",
+      "name": "Random Forest",
+      "cv": {
+        "mae": {
+          "mean": 4.1036,
+          "std": 0.1611
+        },
+        "rmse": {
+          "mean": 5.1885,
+          "std": 0.1437
+        },
+        "r2": {
+          "mean": 0.789,
+          "std": 0.0304
+        }
+      },
+      "test": {
+        "mae": 4.0046,
+        "rmse": 5.0005,
+        "r2": 0.8001
+      },
+      "best_params": {
+        "max_depth": 10,
+        "max_features": "sqrt",
+        "min_samples_leaf": 5
+      }
+    }
+  ],
+  "selection": {
+    "rule": "lowest outer-CV RMSE, then simplest model within one standard error of it",
+    "best_cv_key": "linear_regression",
+    "threshold_rmse": 4.9756,
+    "chosen_key": "linear_regression"
+  },
+  "training": {
+    "trained_at": "2026-11-18T20:00:00+00:00",
+    "random_seed": 42,
+    "test_size": 0.2,
+    "outer_cv_folds": 5,
+    "inner_cv_folds": 3,
+    "n_train": 1600,
+    "n_test": 400,
+    "dataset": {
+      "file": "Final_Marks_Data.csv",
+      "sha256": "f7aeaabfe91c70ff42708c0280dce246e9da77e8205d0e370fa8673f9e6828d5",
+      "provenance": "unknown"
+    },
+    "excluded_columns": {
+      "Student_ID": "identifier",
+      "Daily Study Hours": "excluded by project decision"
+    }
+  },
+  "library_versions": {
+    "python": "3.13.7",
+    "numpy": "2.5.5",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "joblib": "1.6.0",
+    "shap": "0.54.1"
+  },
+  "model_sha256": "dda06f7e0b1b2d7d0552aa4fdf8b7dc8e735f7cdb47f154c22aaf1aa618acf08",
+  "shap": {
+    "explainer": "linear",
+    "background_file": "background.csv",
+    "background_rows": 200,
+    "background_sha256": "64f818c0cacbfa3f0af14b74fb95e8a82291ba8ea3dc3e77f44c0eba76f6f4e8",
+    "base_value": 65.7891,
+    "global_importance": {
+      "computed_on": "training set (n=1600)",
+      "statistic": "mean |SHAP value| per input",
+      "values": [
+        {
+          "feature": "internal1_pct",
+          "label": "Internal Test 1",
+          "mean_abs_shap": 3.4128,
+          "share": 0.3147
+        },
+        {
+          "feature": "internal2_pct",
+          "label": "Internal Test 2",
+          "mean_abs_shap": 3.3654,
+          "share": 0.3104
+        },
+        {
+          "feature": "attendance_pct",
+          "label": "Attendance",
+          "mean_abs_shap": 2.8004,
+          "share": 0.2582
+        },
+        {
+          "feature": "assignment_pct",
+          "label": "Assignment",
+          "mean_abs_shap": 1.2652,
+          "share": 0.1167
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Dataset provenance is unknown; performance on a real cohort is unverified.",
+    "Predictions are associations learned from data, not causal effects.",
+    "Inputs outside the training range are extrapolations and less reliable."
+  ]
+}

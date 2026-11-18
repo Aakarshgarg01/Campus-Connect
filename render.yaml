@@ -1,0 +1,30 @@
+# Render Blueprint for the backend (https://render.com/docs/blueprint-spec).
+# The MySQL database is NOT created here (Render has no managed MySQL); point DATABASE_URL at
+# your managed MySQL. Values marked `sync: false` are entered in the Render dashboard on first
+# deploy and are never stored in git.
+services:
+  - type: web
+    name: student-performance-api
+    runtime: docker
+    rootDir: backend
+    dockerfilePath: ./Dockerfile
+    plan: free  # free instances sleep after ~15 min idle; first request then takes ~1 min
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATABASE_URL          # mysql+pymysql://USER:PASSWORD@HOST:PORT/student_predictor?charset=utf8mb4
+        sync: false
+      - key: DB_SSL_CA             # system CA bundle in the image; works for providers with public CAs
+        value: /etc/ssl/certs/ca-certificates.crt
+      - key: JWT_SECRET
+        generateValue: true
+      - key: CORS_ORIGINS          # e.g. https://your-frontend.vercel.app
+        sync: false
+      - key: COOKIE_SAMESITE       # frontend and API are on different sites
+        value: none
+      - key: ACCESS_TOKEN_EXPIRE_MINUTES
+        value: "60"
+      - key: LOGIN_RATE_LIMIT
+        value: 5/minute

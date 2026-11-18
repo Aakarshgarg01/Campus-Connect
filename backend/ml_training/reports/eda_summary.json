@@ -1,0 +1,263 @@
+{
+  "dataset": {
+    "path": "ml_training/data/Final_Marks_Data.csv",
+    "sha256": "f7aeaabfe91c70ff42708c0280dce246e9da77e8205d0e370fa8673f9e6828d5",
+    "rows": 2000,
+    "columns": [
+      "Student_ID",
+      "Attendance (%)",
+      "Internal Test 1 (out of 40)",
+      "Internal Test 2 (out of 40)",
+      "Assignment Score (out of 10)",
+      "Daily Study Hours",
+      "Final Exam Marks (out of 100)"
+    ],
+    "dtypes": {
+      "Student_ID": "str",
+      "Attendance (%)": "int64",
+      "Internal Test 1 (out of 40)": "int64",
+      "Internal Test 2 (out of 40)": "int64",
+      "Assignment Score (out of 10)": "int64",
+      "Daily Study Hours": "int64",
+      "Final Exam Marks (out of 100)": "int64"
+    },
+    "excluded_columns": {
+      "Student_ID": "identifier",
+      "Daily Study Hours": "excluded by project decision"
+    },
+    "provenance": "unknown (source and licence not documented in the repository)"
+  },
+  "quality": {
+    "missing_values_total": 0,
+    "duplicate_student_ids": 0,
+    "exact_duplicate_rows_excluding_id": 3,
+    "rows_in_duplicate_groups_excluding_id": 6,
+    "identical_inputs_with_different_targets_groups": 56,
+    "all_values_integers": true,
+    "iqr_outliers_per_column": {
+      "Attendance (%)": 10,
+      "Internal Test 1 (out of 40)": 8,
+      "Internal Test 2 (out of 40)": 1,
+      "Assignment Score (out of 10)": 79,
+      "Daily Study Hours": 3,
+      "Final Exam Marks (out of 100)": 7
+    }
+  },
+  "describe_raw": {
+    "Attendance (%)": {
+      "count": 2000.0,
+      "mean": 84.892,
+      "std": 7.759,
+      "min": 52.0,
+      "25%": 80.0,
+      "50%": 85.0,
+      "75%": 90.0,
+      "max": 100.0
+    },
+    "Internal Test 1 (out of 40)": {
+      "count": 2000.0,
+      "mean": 32.115,
+      "std": 4.564,
+      "min": 18.0,
+      "25%": 29.0,
+      "50%": 32.0,
+      "75%": 35.0,
+      "max": 40.0
+    },
+    "Internal Test 2 (out of 40)": {
+      "count": 2000.0,
+      "mean": 32.464,
+      "std": 4.523,
+      "min": 16.0,
+      "25%": 29.0,
+      "50%": 33.0,
+      "75%": 36.0,
+      "max": 40.0
+    },
+    "Assignment Score (out of 10)": {
+      "count": 2000.0,
+      "mean": 7.507,
+      "std": 1.021,
+      "min": 4.0,
+      "25%": 7.0,
+      "50%": 8.0,
+      "75%": 8.0,
+      "max": 10.0
+    },
+    "Daily Study Hours": {
+      "count": 2000.0,
+      "mean": 2.824,
+      "std": 0.609,
+      "min": 1.0,
+      "25%": 2.0,
+      "50%": 3.0,
+      "75%": 3.0,
+      "max": 5.0
+    },
+    "Final Exam Marks (out of 100)": {
+      "count": 2000.0,
+      "mean": 64.855,
+      "std": 11.341,
+      "min": 25.0,
+      "25%": 58.0,
+      "50%": 65.0,
+      "75%": 73.0,
+      "max": 100.0
+    }
+  },
+  "describe_features": {
+    "attendance_pct": {
+      "count": 2000.0,
+      "mean": 84.892,
+      "std": 7.759,
+      "min": 52.0,
+      "25%": 80.0,
+      "50%": 85.0,
+      "75%": 90.0,
+      "max": 100.0
+    },
+    "internal1_pct": {
+      "count": 2000.0,
+      "mean": 80.289,
+      "std": 11.409,
+      "min": 45.0,
+      "25%": 72.5,
+      "50%": 80.0,
+      "75%": 87.5,
+      "max": 100.0
+    },
+    "internal2_pct": {
+      "count": 2000.0,
+      "mean": 81.161,
+      "std": 11.307,
+      "min": 40.0,
+      "25%": 72.5,
+      "50%": 82.5,
+      "75%": 90.0,
+      "max": 100.0
+    },
+    "assignment_pct": {
+      "count": 2000.0,
+      "mean": 75.07,
+      "std": 10.21,
+      "min": 40.0,
+      "25%": 70.0,
+      "50%": 80.0,
+      "75%": 80.0,
+      "max": 100.0
+    },
+    "final_exam_pct": {
+      "count": 2000.0,
+      "mean": 64.855,
+      "std": 11.341,
+      "min": 25.0,
+      "25%": 58.0,
+      "50%": 65.0,
+      "75%": 73.0,
+      "max": 100.0
+    }
+  },
+  "target": {
+    "mean": 64.855,
+    "median": 65.0,
+    "std": 11.341,
+    "skew": -0.119,
+    "min": 25.0,
+    "max": 100.0,
+    "share_below_40": 0.0125,
+    "histogram": {
+      "[0.0, 40.0)": 25,
+      "[40.0, 50.0)": 163,
+      "[50.0, 60.0)": 432,
+      "[60.0, 70.0)": 694,
+      "[70.0, 80.0)": 474,
+      "[80.0, 90.0)": 197,
+      "[90.0, 100.01)": 15
+    }
+  },
+  "correlation_with_target": {
+    "pearson": {
+      "Attendance (%)": 0.726,
+      "Internal Test 1 (out of 40)": 0.689,
+      "Internal Test 2 (out of 40)": 0.691,
+      "Assignment Score (out of 10)": 0.669,
+      "Daily Study Hours": 0.413
+    },
+    "spearman": {
+      "Attendance (%)": 0.712,
+      "Internal Test 1 (out of 40)": 0.677,
+      "Internal Test 2 (out of 40)": 0.68,
+      "Assignment Score (out of 10)": 0.656,
+      "Daily Study Hours": 0.393
+    }
+  },
+  "feature_correlation_matrix": {
+    "attendance_pct": {
+      "attendance_pct": 1.0,
+      "internal1_pct": 0.505,
+      "internal2_pct": 0.495,
+      "assignment_pct": 0.432
+    },
+    "internal1_pct": {
+      "attendance_pct": 0.505,
+      "internal1_pct": 1.0,
+      "internal2_pct": 0.263,
+      "assignment_pct": 0.568
+    },
+    "internal2_pct": {
+      "attendance_pct": 0.495,
+      "internal1_pct": 0.263,
+      "internal2_pct": 1.0,
+      "assignment_pct": 0.542
+    },
+    "assignment_pct": {
+      "attendance_pct": 0.432,
+      "internal1_pct": 0.568,
+      "internal2_pct": 0.542,
+      "assignment_pct": 1.0
+    }
+  },
+  "vif": {
+    "attendance_pct": 1.655,
+    "internal1_pct": 1.759,
+    "internal2_pct": 1.679,
+    "assignment_pct": 1.954
+  },
+  "target_mean_by_attendance_band": {
+    "[0.0, 75.0)": {
+      "n": 183,
+      "mean_final": 49.91
+    },
+    "[75.0, 80.0)": {
+      "n": 311,
+      "mean_final": 56.46
+    },
+    "[80.0, 85.0)": {
+      "n": 460,
+      "mean_final": 62.15
+    },
+    "[85.0, 90.0)": {
+      "n": 480,
+      "mean_final": 67.25
+    },
+    "[90.0, 95.0)": {
+      "n": 338,
+      "mean_final": 71.69
+    },
+    "[95.0, 100.01)": {
+      "n": 228,
+      "mean_final": 78.59
+    }
+  },
+  "study_hours_note": {
+    "pearson_with_target": 0.413,
+    "values": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "used_in_model": false
+  }
+}
