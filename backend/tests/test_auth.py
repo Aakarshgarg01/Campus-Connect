@@ -5,6 +5,7 @@ from __future__ import annotations
 from datetime import UTC, datetime, timedelta
 
 import jwt
+import pytest
 from sqlalchemy import select, text
 from sqlalchemy.orm import Session
 
@@ -174,3 +175,34 @@ def test_admin_role_value(engine, api):
     create_staff(engine, UserRole.ADMIN, email="admin@college.edu", employee_id="ADM1")
     headers = login(api, "ADM1")
     assert api.get("/api/auth/me", headers=headers).json()["role"] == "admin"
+
+
+# --- default demo logins (local testing) -------------------------------------------------------
+
+def test_seed_demo_creates_working_logins_and_is_idempotent(api, mysql_url, monkeypatch):
+    from app.cli import DEMO_PASSWORD, seed_demo
+
+    seed_demo()
+    seed_demo()  # running again just resets the passwords
+    for identifier, role in (("FAC1024", "faculty"), ("CS21041", "student")):
+        response = api.post("/api/auth/login", json={"identifier": identifier, "password": DEMO_PASSWORD})
+        assert response.status_code == 200 and response.json()["user"]["role"] == role
+    api.cookies.clear()
+    headers = {"Authorization": f"Bearer {response.json()['access_token']}"}
+    assert api.get("/api/students/me", headers=headers).json()["roll_number"] == "CS21041"
+
+
+def test_seed_demo_refused_in_production(monkeypatch):
+    from app.cli import seed_demo
+    from app.core.config import get_settings
+
+    monkeypatch.setenv("ENVIRONMENT", "production")
+    monkeypatch.setenv("CORS_ORIGINS", "https://app.example.com")
+    monkeypatch.setenv("DATABASE_URL", "mysql+pymysql://u:p@db.example.com/x")
+    monkeypatch.setenv("DB_SSL_CA", "/etc/ssl/certs/ca-certificates.crt")
+    get_settings.cache_clear()
+    try:
+        with pytest.raises(SystemExit, match="production"):
+            seed_demo()
+    finally:
+        get_settings.cache_clear()

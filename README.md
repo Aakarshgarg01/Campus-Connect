@@ -213,7 +213,17 @@ Copy-Item .env.example .env        # VITE_API_BASE_URL=http://localhost:8000
 npm install
 npm run dev -- --port 8080
 ```
-Then open `http://localhost:8080`, register a student or sign in as faculty.
+Then open `http://localhost:8080`.
+
+**Default testing logins** (local and development only): run `python -m app.cli seed-demo` once.
+It creates the accounts below, or resets their password if they already exist, and refuses to run when `ENVIRONMENT=production`.
+
+| Role | Login ID | Password |
+|---|---|---|
+| Faculty | `FAC1024` (or `demo.faculty@example.com`) | `Campus@123` |
+| Student | `CS21041` (or `demo.student@example.com`) | `Campus@123` |
+
+Never use these on a deployed site.
 
 **Retrain / EDA** (optional): `python -m ml_training.eda`, `python -m ml_training.train`.
 
